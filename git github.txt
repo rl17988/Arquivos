@@ -1,0 +1,225 @@
+INICIAL
+
+Na pasta onde irá guardar os arquivos, botao da direita
+clicar em Git Bash Here
+
+-para criar vinculo do git com a pasta repositório
+git init
+
+-verifica o status do repositório e mostra os arquivos e versionamentos se estão atualizados, os arquivos que não foram incluídos no controle de versão estarão em vermelho
+git status
+
+-para incluir o arquivo no controle de versão, o nome do arquivo vai estar em vermelho, deve ser colocado por completo.
+git add "nome do arquivo.txt"
+
+-adiciona todos os arquivos que estiverem pendentes sem precisar inlcuir um de cada vez, pode ter diversos tipos de arquivos diferentes, ele puxa todos.
+git add .
+
+------------------------------------------
+
+CRIANDO VERSÕES
+
+-para criar um versão do código, geralmente a primeira versao é chamada de commit inicial, é uma boa prática usar esse nome, a msg das alterações posteriores deve ser o mais breve possível
+git commit -m "commit inicial"
+
+-vai exibir a lista de arquivos que foram adicionados e o nome da branch para onde serão enviadas as informações, esse arquivos vao ser enviados para nuvem dentro do github, até o momento tudo que foi feito foi local.
+
+-Deve ser criado um link do projeto na nuvem para ele enviar para lá, para isso deve ser criado um repositório do github
+-no github
+new repository
+-dar um nome para ele
+-tem opção de colocar descrição
+-escolher como publico ou privado dependendo da necessidade
+-adicionar um arquivo README, é importante pois tem a instruções de como as pessoas devem usar aquele  respositório.
+-create repository
+- após criado, copiar o link do navegador
+
+-definir para onde o código será enviado
+git remote add origin e colar o link aqui
+
+-se for a primeira vez vai abrir uma tela e pedir login do git e permissão.
+
+-por fim, para enviar, utilizar o comando git push, mas ele nao vai funcionar, ainda falta definir o brunch para onde será enviado, a mensagem exibira o codigo da branch principal a mater
+git push --set-upstream origin master
+
+
+OBS, método abaixo não funcionou, com a forma acima e tela de login rodou tudo
+------------------------------------------
+-se for a primeira vez que for rodar esse comando, ele vai pedir para configurar o git no computador
+
+-fazer um codigo de cada vez, colocando o email que foi criada a conta no github e depois o nome
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
+------------------------------------------
+
+
+CICLO DE ATUALIZAÇÃO DO CODIGO
+
+-depois de realizar alterações nos códigos e salvar o arquivo
+-para ver que houve alteração e em quais arquivos, mostrara em vermelho
+git status
+
+-adicionar a modificação ao versionamento local
+git add .
+
+-para ver em verde que foi adicionado
+git status
+
+-dar um nome a essa nova versão ainda local
+git commit -m "adicoes, o q foi alterado, comentario etc"
+
+-enviar atualizações para o servidor
+git push
+
+------------------------------------------
+
+
+VER HISTORICO DAS ATUALIZAÇÕES
+
+-mostra as versões que foram feitas até o momento
+git reflog
+
+------------------------------------------
+
+
+VOLTAR A UMA VERSÃO ANTERIOR DO CODIGO
+
+-o git reflog irá exibir as versões do código em amarelo no canto esquerdo, é possível retonar a versão desejada ex: 1a2b3c
+git reset --hard 1a2b3c
+
+-ao abrir o arquivo localmente na pasta, podera ver que mudou para a versão escolhida.
+-para retornar a versão final ou a alguma outra, fazer o mesmo processo e escolher a versao desajada.
+
+
+------------------------------------------
+
+BRANCH
+
+-são "galhos" onde são armazenados as verões dos aquivos.
+-Geralmente uma armazenará somente os códigos finais, ou que estão em funcionamento pleno e sem busg etc, e outras onde serão armazenados outras produções em andamento, para rodar testes, mudanças etc sem risco deperder ou alterar o codigo que funciona.
+
+-para ver quais branchs estão disponíveis no momento
+git branch
+
+-criar uma nova branch
+branch nome da branch
+
+-para verificar novamente as branchs, utilizar git branch
+o que estiver com * e na cor verde é a que está em uso no momento.
+
+-para alternar entre branch
+git checkout nome da branch
+
+-ao mudar de branch, tudo que for feito e salvo no arquivo, essas novas versões irão ser gravadas no novo branch vigente
+
+-para enviar as informações, git status, git add. e git push
+ele ira mostrar uma msg do codigo a ser usado para setar com a nova branch
+copiar e colar.
+
+
+------------------------------------------
+
+MERGE
+
+obs importante: antes de fazer mudanças de merge é preciso atualizar as coisas, então trazendo as atualizações do servido para o computador local e apóis isso, utiliza o merge, isso porque quando trabalhado em grupo alguem pode ter enviado ao servidor novas atualizações e sem atualizar voce pode estar enviando novos codigos para uma versão que não é a final então o git pull traz do servidor as mais novas atualizações para seu computador local e então fazer o merge
+git checkout branch principal
+git pull
+
+-levar atualizações de uma branch para outra
+-mudar para a branch principal para onde se quer levar o código
+git checkout nome da branch
+
+-para visualizar a mudança
+git branch
+
+-para unir os codigos, esteja na branch que se quer puxar os códigos e utilize o  codigo com o nome da brach que contem as atualizações a serem puxadas.
+git merge nome da branch temporaria
+
+-ira exibir o que foi alterado
+-finalizar com git push para enviar as alterações para o servidor
+git push
+
+
+------------------------------------------
+
+
+EXTRA PARA TRABALHOS MAIORES OU EM EQUIPE
+
+-criar uma nova branch com base na branch principal em um único comando
+git checkout -b (nome da branch fucionalidade) (nome da branch usada como base)
+exemplo: 
+git checkout -b sistema-de-login master
+
+-apos realizada alterações no arquvo
+git add .
+git status
+git commit -m "criado sistema de login"
+git checkout master
+git pull
+git merge sistema-de-login master
+git push
+
+
+NAS EMPRESAS
+
+-para adicionar códigos novos para uma branch é necessário que alguém valide o código para ver se está funcionando de corretamente, então é preciso enviar seu código para outro programador aprovar ou rejeitar
+
+após alterar e salvar o aquivo
+git checkout branck temporaria
+git add .
+git commit -m "o que foi adicionado"
+git push (copia e cola a msg)
+
+-nesse ponto o codigo novo ja esta na nuvem na branch temporaria
+-no site do github, atualizar pagina, nos avisos do que foi alterado terá um botão  verde "compare & pull resquest", nele vai abrir uma tela onde tem dois botoes com  uma seta, ela indica de onde está vindo as alterações e o outro para onde vai, esse   voce deve escolher para qual branch tem intenção de enviar as alterações, é possivel  colocar um titulo e texto para informar melhor o que foi alteradado, o titulo ja vem  com o nome da commit, clicar em create pull request logo abaixo.
+-na direita existe uma aba reviewers que são as pessoas que ja revisaram seu projeto,  voce pode ver se elas aprovaram ou reprovaram e ver os comentarios, caso reprovado,  fazer as correções, enviar um novo commit apenas, nao precisa abrir uma nova pull  request, deixar um comentario marcando as pessoas e informando sobre as alterações e  poder verificar aprovação novamente. A pessoa que tem o poder de aprovação vai clicar em Merge pull resquest, irá realizar o merge dos códigos.
+
+
+------------------------------------------
+
+
+GIT IGNORE
+-há casos onde não se quer enviar alguns arquivos que estão na pasta para o  repositório e controle de versão, uma pasta por exemplo chamada "segredos", e nessa  pasta diversos arquivos que são "confidenciais" como um arquivo "senha"
+ se rodar um git status, ele vai mostrar que tem essa pasta ou arquivo para ser adiconado, e se  rodar o git add . vai enviar para o repositório, para evitar isso, deve ser criada direto pelo terminal git da pasta usando:
+touch .gitignore
+-será criado um arquivo, abrir ele utilizando o bloco de notas e nele escrever todos os arquivos que se quer ignorar, exemplo, para a pasta segredos escrever e salvar
+segredos/
+
+git status
+agora ele nao identifica mais a pasta
+
+-se tiver mais arquivos para ignorar por exemplo fotos.png, então deve abrir novamente o arquivo gitignore e na linha debaixo escrever o nome, ficando assim nesse exemplo:
+
+segredos/
+fotos.png
+
+git status
+agora ele nao identifica mais a pasta e nem o arquivo
+
+IMPORTANTE: adicionar ao repositório o arquivo gitignore pois ele é quem controla o que vai ser escondido.
+git status
+git add .
+git status
+git commit -m "adicionando arquivo gitignore"
+git push
+
+
+
+------------------------------------------
+
+
+
+RESUMO
+
+git init							inicia um novo repositorio
+git add .							adiciona os arquivos atuais ao próximo commit
+git status							verificar o statua atual dos repositorios git
+git commit -m "mensagem do commit"				cria um novo commit com uma mensagem
+git push							envia as atualizações para a nuvem na branch ativa
+git branch							permite listar e ver qual branch está ativa
+git checkout nome-da-branch					alterar entre branch
+git checkout -b "nome da branch origem" "nova da nova branch"	permite mudar e criar uma nova branch com base em outra
+git merge "branch a receber merge"				realiza o merge da branch ativa com outra branch selecionada
+git pull							atualiza a branch ativa
+
+
